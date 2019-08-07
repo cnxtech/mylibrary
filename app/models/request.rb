@@ -69,15 +69,18 @@ class Request
   end
 
   def placed_library
-    code = fields['placedLibrary']['key']
+    fields['placedLibrary']['key']
+  end
 
+  def library
+    code = item['library']['key']
     return Settings.BORROW_DIRECT_CODE if from_borrow_direct?
 
     code
   end
 
   def from_borrow_direct?
-    fields.dig('placedLibrary', 'key') == 'SUL'
+    fields.dig('item', 'fields', 'library', 'key') == 'SUL'
   end
 
   # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
